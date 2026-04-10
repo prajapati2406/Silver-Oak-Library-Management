@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Silver Oak LMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <div class="logo-icon">📚</div>
+                Silver Oak LMS
+            </div>
+            <nav>
+                <ul id="user-nav">
+                    <li><a href="library.html">🏠 Library</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h1>💳 Payment</h1>
+                <p>Complete your purchase securely</p>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary" id="payment-summary">
+                <!-- Summary will be loaded by JavaScript -->
+            </div>
+
+            <!-- Payment Form -->
+            <form onsubmit="processPayment(event)">
+                <!-- Student Details (Read-only) -->
+                <div class="form-group">
+                    <label>Student Information</label>
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; border-left: 4px solid #667eea;">
+                        <p><strong>Name:</strong> <span id="pay-name"></span></p>
+                        <p><strong>Email:</strong> <span id="pay-email"></span></p>
+                        <p><strong>Mobile:</strong> <span id="pay-mobile"></span></p>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <h3 style="margin-top: 30px; margin-bottom: 20px;">Select Payment Method *</h3>
+                
+                <div class="payment-method">
+                    <input type="radio" name="payment-method" value="Credit Card" required>
+                    <div style="flex: 1;">
+                        <strong>💳 Credit Card</strong>
+                        <p style="margin: 5px 0; font-size: 14px; color: #666;">Visa, Mastercard, American Express</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <input type="radio" name="payment-method" value="Debit Card" required>
+                    <div style="flex: 1;">
+                        <strong>🏧 Debit Card</strong>
+                        <p style="margin: 5px 0; font-size: 14px; color: #666;">All major debit cards accepted</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <input type="radio" name="payment-method" value="Net Banking" required>
+                    <div style="flex: 1;">
+                        <strong>🏦 Net Banking</strong>
+                        <p style="margin: 5px 0; font-size: 14px; color: #666;">All major banks supported</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <input type="radio" name="payment-method" value="UPI" required>
+                    <div style="flex: 1;">
+                        <strong>📱 UPI</strong>
+                        <p style="margin: 5px 0; font-size: 14px; color: #666;">Google Pay, PhonePe, Paytm</p>
+                    </div>
+                </div>
+
+                <div class="payment-method">
+                    <input type="radio" name="payment-method" value="Wallet" required>
+                    <div style="flex: 1;">
+                        <strong>💰 Digital Wallet</strong>
+                        <p style="margin: 5px 0; font-size: 14px; color: #666;">Paytm, Amazon Pay, MobiKwik</p>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="form-group" style="margin-top: 30px;">
+                    <label>
+                        <input type="checkbox" required style="width: auto; margin-right: 10px;">
+                        I agree to the <a href="#" style="color: #667eea; text-decoration: underline;">Terms and Conditions</a>
+                    </label>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn-checkout" style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Complete Payment</button>
+                    <a href="cart.html" class="btn" style="flex: 1; text-align: center; background: #999;">← Back to Cart</a>
+                </div>
+            </form>
+
+            <!-- Security Info -->
+            <div style="background: #f0f0f0; padding: 15px; border-radius: 5px; margin-top: 30px; text-align: center;">
+                <p style="margin: 0; font-size: 12px; color: #666;">🔒 Your payment information is encrypted and secure</p>
+                <p style="margin: 5px 0; font-size: 12px; color: #666;">Powered by Secure Payment Gateway</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Silver Oak University - Library Management System</p>
+        <p>Prof. Vedrucha Pandya | Silveroakuni.ac.in</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            if (!currentUser) {
+                window.location.href = 'student-login.html';
+            }
+            if (cart.length === 0) {
+                window.location.href = 'library.html';
+            }
+
+            displayPaymentSummary();
+            updateUserUI();
+
+            // Display student information
+            document.getElementById('pay-name').textContent = currentUser.name;
+            document.getElementById('pay-email').textContent = currentUser.email;
+            document.getElementById('pay-mobile').textContent = currentUser.mobile;
+        });
+    </script>
+</body>
+</html>
