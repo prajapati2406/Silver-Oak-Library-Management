@@ -1,26 +1,151 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        body.login-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e8f0ff 0%, #f4f8ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .login-card {
+            background: white;
+            border: 1px solid rgba(17, 17, 17, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 24px 80px rgba(17, 17, 17, 0.08);
+            overflow: hidden;
+        }
+
+        .login-hero {
+            background: linear-gradient(135deg, #111 0%, #2196f3 100%);
+            color: white;
+            padding: 32px 28px;
+        }
+
+        .login-hero h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+            letter-spacing: 0.5px;
+        }
+
+        .login-hero p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+        }
+
+        .login-form {
+            padding: 32px 28px 36px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d3d9e6;
+            border-radius: 10px;
+            background: #fafbff;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #2196f3;
+            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.12);
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            color: #555;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin: 0;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px 16px;
+            background: #111;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .btn-submit:hover {
+            background: #1976d2;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            margin-top: 18px;
+            font-weight: 700;
+            display: none;
+        }
+
+        .login-footer {
+            margin-top: 20px;
+            padding: 0 28px 28px;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Admin Login</h1>
-        <form id="admin-login-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
-            <input type="checkbox" id="show-password"> Show Password
-            <br>
-            <button type="submit">Login</button>
-        </form>`
-        <p id="error-message" style="color: red; display: none;">Invalid username or password.</p>
+<body class="login-page">
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-hero">
+                <h1>Admin Login</h1>
+                <p>Sign in to manage books, users, and dashboard settings securely.</p>
+            </div>
+            <form id="admin-login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter admin username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-password">
+                    <label for="show-password">Show password</label>
+                </div>
+                <button type="submit" class="btn btn-submit">Sign In</button>
+            </form>
+            <p id="error-message" class="error-message">Invalid username or password.</p>
+            <div class="login-footer">
+                <p>Only authorized administrators can access this section. Please keep your credentials secure.</p>
+            </div>
+        </div>
     </div>
 
     <script>
