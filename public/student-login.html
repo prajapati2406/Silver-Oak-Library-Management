@@ -25,7 +25,7 @@
 
     <div class="container">
         <div class="form-container">
-            <h1 style="text-align: center; color: #333; margin-bottom: 30px;">📚 Student Login</h1>
+            <h1 class="form-header">📚 Student Login</h1>
             
             <form onsubmit="validateStudentLogin(event)">
                 <!-- Name -->
@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label for="mobile">Mobile Number *</label>
                     <input type="tel" id="mobile" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
-                    <small style="color: #666;">Enter a 10-digit mobile number without spaces</small>
+                    <small class="small-text">Enter a 10-digit mobile number without spaces</small>
                 </div>
 
                 <!-- Email -->
@@ -63,8 +63,8 @@
                 <div class="captcha-section">
                     <label>Security Verification *</label>
                     <div class="captcha-image" id="captcha-image">Loading...</div>
-                    <div class="form-group" style="margin-bottom: 10px;">
-                        <input type="text" id="captcha-input" placeholder="Enter the code above" style="width: 100%;" required maxlength="6">
+                    <div class="form-group">
+                        <input type="text" id="captcha-input" placeholder="Enter the code above" required maxlength="6">
                     </div>
                     <button type="button" class="btn-refresh-captcha" onclick="refreshCaptcha()">🔄 Refresh Code</button>
                 </div>
@@ -79,9 +79,12 @@
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Silver Oak University - Library Management System</p>
-        <p>Prof. Vedrucha Pandya | Silveroakuni.ac.in</p>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>© 2026 Silver Oak University LMS. All rights reserved.</p>
+            <p>Designed and maintained by Prof. Vedrucha Pandya | <a href="https://silveroaks.ac.in" target="_blank" rel="noopener noreferrer">silveroaks.ac.in</a></p>
+            <p>Contact: <a href="mailto:library@silveroaks.ac.in">library@silveroaks.ac.in</a> | +91-XXXXXXXXXX</p>
+        </div>
     </footer>
 
     <script src="js/app.js"></script>

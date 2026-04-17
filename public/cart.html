@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - Silver Oak LMS</title>
+    <title>Shopping Cart - Library Management System</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
         <div class="navbar">
             <div class="logo">
                 <div class="logo-icon">📚</div>
-                Silver Oak LMS
+                Library Management System
             </div>
             <nav>
                 <ul id="user-nav">
@@ -33,16 +33,19 @@
                 <!-- Summary will be loaded by JavaScript -->
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="library.html" class="btn" style="background: #667eea; margin-right: 10px;">← Continue Shopping</a>
-                <button class="btn btn-secondary" onclick="clearCart()" style="background: #999;">Clear Cart</button>
+            <div class="center-controls">
+                <a href="library.html" class="btn">← Continue Shopping</a>
+                <button class="btn btn-muted" onclick="clearCart()">Clear Cart</button>
             </div>
         </section>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Silver Oak University - Library Management System</p>
-        <p>Prof. Vedrucha Pandya | Silveroakuni.ac.in</p>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>© 2026 Library Management System. All rights reserved.</p>
+            <p>Designed and maintained by Prof. Vedrucha Pandya | <a href="https://silveroaks.ac.in" target="_blank" rel="noopener noreferrer">silveroaks.ac.in</a></p>
+            <p>Contact: <a href="mailto:library@silveroaks.ac.in">library@silveroaks.ac.in</a> | +91 7984773148</p>
+        </div>
     </footer>
 
     <script src="js/app.js"></script>

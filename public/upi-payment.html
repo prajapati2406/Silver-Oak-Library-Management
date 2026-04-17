@@ -77,14 +77,14 @@
 
             <div class="qr-code" id="qr-code"></div>
 
-            <p style="margin-top: 20px; color: #666;">
+            <p class="small-text mt-20">
                 Amount: ₹<span id="upi-amount"></span>
             </p>
-            <p style="font-size: 14px; color: #888; margin-top: 10px;">
+            <p class="small-text mt-20">
                 Payee: Silver Oak University Library<br>
                 UPI ID: library@silveroak
             </p>
-            <p style="font-size: 12px; color: #999; margin-top: 15px; font-style: italic;">
+            <p class="small-text mt-20 italic">
                 Use any UPI app (Google Pay, PhonePe, Paytm, etc.) to scan and pay
             </p>
 
@@ -102,9 +102,12 @@
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Silver Oak University - Library Management System</p>
-        <p>Prof. Vedrucha Pandya | Silveroakuni.ac.in</p>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>© 2026 Silver Oak University LMS. All rights reserved.</p>
+            <p>Designed and maintained by Prof. Vedrucha Pandya | <a href="https://silveroaks.ac.in" target="_blank" rel="noopener noreferrer">silveroaks.ac.in</a></p>
+            <p>Contact: <a href="mailto:library@silveroaks.ac.in">library@silveroaks.ac.in</a> | +91-XXXXXXXXXX</p>
+        </div>
     </footer>
 
     <script src="js/app.js"></script>
@@ -167,7 +170,7 @@
                 // Fallback: show text-based QR code representation
                 const qrContainer = document.getElementById('qr-code');
                 qrContainer.innerHTML = `
-                    <div style="width: 200px; height: 200px; background: #f0f0f0; border: 2px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #666; padding: 10px;">
+                    <div class="qr-fallback">
                         <div>
                             <strong>UPI Payment</strong><br>
                             Pay: ₹${totalAmount.toFixed(2)}<br>

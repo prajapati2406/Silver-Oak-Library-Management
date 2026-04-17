@@ -38,7 +38,7 @@
                 <!-- Student Details (Read-only) -->
                 <div class="form-group">
                     <label>Student Information</label>
-                    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; border-left: 4px solid #667eea;">
+                    <div class="panel-box">
                         <p><strong>Name:</strong> <span id="pay-name"></span></p>
                         <p><strong>Email:</strong> <span id="pay-email"></span></p>
                         <p><strong>Mobile:</strong> <span id="pay-mobile"></span></p>
@@ -46,78 +46,94 @@
                 </div>
 
                 <!-- Payment Methods -->
-                <h3 style="margin-top: 30px; margin-bottom: 20px;">Select Payment Method *</h3>
+                <h3 class="mt-30 mb-20">Select Payment Method *</h3>
                 
-                <div class="payment-method">
-                    <input type="radio" name="payment-method" value="Credit Card" required>
-                    <div style="flex: 1;">
-                        <strong>💳 Credit Card</strong>
-                        <p style="margin: 5px 0; font-size: 14px; color: #666;">Visa, Mastercard, American Express</p>
+                <div class="payment-method" onclick="selectPaymentMethod(this)">
+                    <input type="radio" name="payment-method" value="Credit Card" id="payment-credit" required>
+                    <div class="flex-1">
+                        <label for="payment-credit" class="payment-label"><strong>💳 Credit Card</strong></label>
+                        <p class="small-text">Visa, Mastercard, American Express</p>
                     </div>
                 </div>
 
-                <div class="payment-method">
-                    <input type="radio" name="payment-method" value="Debit Card" required>
-                    <div style="flex: 1;">
-                        <strong>🏧 Debit Card</strong>
-                        <p style="margin: 5px 0; font-size: 14px; color: #666;">All major debit cards accepted</p>
+                <div class="payment-method" onclick="selectPaymentMethod(this)">
+                    <input type="radio" name="payment-method" value="Debit Card" id="payment-debit" required>
+                    <div class="flex-1">
+                        <label for="payment-debit" class="payment-label"><strong>🏧 Debit Card</strong></label>
+                        <p class="small-text">All major debit cards accepted</p>
                     </div>
                 </div>
 
-                <div class="payment-method">
-                    <input type="radio" name="payment-method" value="Net Banking" required>
-                    <div style="flex: 1;">
-                        <strong>🏦 Net Banking</strong>
-                        <p style="margin: 5px 0; font-size: 14px; color: #666;">All major banks supported</p>
+                <div class="payment-method" onclick="selectPaymentMethod(this)">
+                    <input type="radio" name="payment-method" value="Net Banking" id="payment-netbanking" required>
+                    <div class="flex-1">
+                        <label for="payment-netbanking" class="payment-label"><strong>🏦 Net Banking</strong></label>
+                        <p class="small-text">All major banks supported</p>
                     </div>
                 </div>
 
-                <div class="payment-method">
-                    <input type="radio" name="payment-method" value="UPI" required>
-                    <div style="flex: 1;">
-                        <strong>📱 UPI</strong>
-                        <p style="margin: 5px 0; font-size: 14px; color: #666;">Google Pay, PhonePe, Paytm</p>
+                <div class="payment-method" onclick="selectPaymentMethod(this)">
+                    <input type="radio" name="payment-method" value="UPI" id="payment-upi" required>
+                    <div class="flex-1">
+                        <label for="payment-upi" class="payment-label"><strong>📱 UPI</strong></label>
+                        <p class="small-text">Google Pay, PhonePe, Paytm</p>
                     </div>
                 </div>
 
-                <div class="payment-method">
-                    <input type="radio" name="payment-method" value="Wallet" required>
-                    <div style="flex: 1;">
-                        <strong>💰 Digital Wallet</strong>
-                        <p style="margin: 5px 0; font-size: 14px; color: #666;">Paytm, Amazon Pay, MobiKwik</p>
+                <div class="payment-method" onclick="selectPaymentMethod(this)">
+                    <input type="radio" name="payment-method" value="Wallet" id="payment-wallet" required>
+                    <div class="flex-1">
+                        <label for="payment-wallet" class="payment-label"><strong>💰 Digital Wallet</strong></label>
+                        <p class="small-text">Paytm, Amazon Pay, MobiKwik</p>
                     </div>
                 </div>
 
                 <!-- Terms & Conditions -->
-                <div class="form-group" style="margin-top: 30px;">
-                    <label>
-                        <input type="checkbox" required style="width: auto; margin-right: 10px;">
-                        I agree to the <a href="#" style="color: #667eea; text-decoration: underline;">Terms and Conditions</a>
+                <div class="form-group mt-30">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" required>
+                        I agree to the <a href="#" class="payment-link">Terms and Conditions</a>
                     </label>
                 </div>
 
                 <!-- Submit Buttons -->
-                <div style="display: flex; gap: 10px;">
-                    <button type="submit" class="btn-checkout" style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Complete Payment</button>
-                    <a href="cart.html" class="btn" style="flex: 1; text-align: center; background: #999;">← Back to Cart</a>
+                <div class="button-row">
+                    <button type="submit" class="btn-checkout btn-gradient flex-1">Complete Payment</button>
+                    <a href="cart.html" class="btn btn-muted flex-1">← Back to Cart</a>
                 </div>
             </form>
 
+            <div class="modal" id="payment-modal">
+                <div class="modal-content">
+                    <h2 id="modal-title">Confirm Payment</h2>
+                    <p id="modal-text" class="mb-20"> </p>
+                    <div class="modal-button-row">
+                        <button class="btn-checkout flex-1" onclick="confirmPayment()">Confirm</button>
+                        <button class="btn btn-secondary flex-1" onclick="closePaymentModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Security Info -->
-            <div style="background: #f0f0f0; padding: 15px; border-radius: 5px; margin-top: 30px; text-align: center;">
-                <p style="margin: 0; font-size: 12px; color: #666;">🔒 Your payment information is encrypted and secure</p>
-                <p style="margin: 5px 0; font-size: 12px; color: #666;">Powered by Secure Payment Gateway</p>
+            <div class="note-box">
+                <p class="small-text mb-0">🔒 Your payment information is encrypted and secure</p>
+                <p class="small-text">Powered by Secure Payment Gateway</p>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Silver Oak University - Library Management System</p>
-        <p>Prof. Vedrucha Pandya | Silveroakuni.ac.in</p>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>© 2026 Silver Oak University LMS. All rights reserved.</p>
+            <p>Designed and maintained by Prof. Vedrucha Pandya | <a href="https://silveroaks.ac.in" target="_blank" rel="noopener noreferrer">silveroaks.ac.in</a></p>
+            <p>Contact: <a href="mailto:library@silveroaks.ac.in">library@silveroaks.ac.in</a> | +91-XXXXXXXXXX</p>
+        </div>
     </footer>
 
     <script src="js/app.js"></script>
     <script>
+        let selectedPaymentMethod = null;
+
         window.addEventListener('load', function() {
             if (!currentUser) {
                 window.location.href = 'student-login.html';
@@ -129,11 +145,89 @@
             displayPaymentSummary();
             updateUserUI();
 
-            // Display student information
             document.getElementById('pay-name').textContent = currentUser.name;
             document.getElementById('pay-email').textContent = currentUser.email;
             document.getElementById('pay-mobile').textContent = currentUser.mobile;
+
+            document.querySelectorAll('.payment-method').forEach(card => {
+                card.addEventListener('click', function(event) {
+                    if (event.target.tagName !== 'INPUT') {
+                        const radio = this.querySelector('input[type="radio"]');
+                        if (radio) {
+                            radio.checked = true;
+                            selectPaymentMethod(this);
+                        }
+                    }
+                });
+            });
         });
+
+        function selectPaymentMethod(card) {
+            document.querySelectorAll('.payment-method').forEach(item => item.classList.remove('active'));
+            card.classList.add('active');
+            const radio = card.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+                selectedPaymentMethod = radio.value;
+            }
+        }
+
+        function processPayment(e) {
+            e.preventDefault();
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+            if (!paymentMethod) {
+                showAlert('Please select a payment method', 'error');
+                return;
+            }
+
+            const method = paymentMethod.value;
+            if (method === 'UPI') {
+                window.location.href = 'upi-payment.html';
+                return;
+            }
+
+            const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) * 1.05;
+            document.getElementById('modal-title').textContent = `Confirm ${method} Payment`;
+            document.getElementById('modal-text').innerHTML = `You are about to pay <strong>₹${totalAmount.toFixed(2)}</strong> using <strong>${method}</strong>.<br><br>Please confirm to proceed.`;
+            document.getElementById('payment-modal').classList.add('show');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.remove('show');
+        }
+
+        function confirmPayment() {
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+            if (!paymentMethod) {
+                showAlert('Please select a payment method', 'error');
+                closePaymentModal();
+                return;
+            }
+
+            const method = paymentMethod.value;
+            const totalAmount = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) * 1.05;
+            const orderId = 'ORD' + Date.now();
+            const orderData = {
+                id: orderId,
+                student: currentUser,
+                books: [...cart],
+                totalAmount: totalAmount,
+                paymentMethod: method,
+                orderDate: new Date().toISOString(),
+                status: 'Completed'
+            };
+
+            let allOrders = JSON.parse(localStorage.getItem('allOrders') || '[]');
+            allOrders.push(orderData);
+            localStorage.setItem('allOrders', JSON.stringify(allOrders));
+            localStorage.setItem('cart', JSON.stringify([]));
+            cart = [];
+            closePaymentModal();
+            showAlert('Payment successful! Your order has been placed.', 'success');
+            setTimeout(() => {
+                window.location.href = 'library.html';
+            }, 1800);
+        }
     </script>
 </body>
 </html>
