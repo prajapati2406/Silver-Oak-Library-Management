@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - Silver Oak library management system</title>
+<title>Admin Dashboard - Library Management System</title>
 
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -11,114 +11,129 @@
 <body>
 
 <header>
-<div class="navbar">
-<div class="logo">📚 Silver Oak Library - Admin</div>
+    <div class="navbar">
+        <div class="logo">📚 Silver Oak Library - Admin</div>
 
-<nav>
-<ul>
-<li><a href="#dashboard">Dashboard</a></li>
-<li><a href="#books">Books</a></li>
-<li><a href="#students">Students</a></li>
-<li><a href="#orders">Orders</a></li>
-<li><button class="btn-logout" id="logoutBtn">Logout</button></li>
-</ul>
-</nav>
-
-</div>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#books">Books</a></li>
+                <li><a href="#students">Students</a></li>
+                <li><a href="#orders">Orders</a></li>
+                <li><button type="button" class="btn-logout" id="logoutBtn">Logout</button></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <div class="container">
 
-<div class="admin-header">
-<h1>👨‍💼 Admin Control Panel</h1>
-<p>Prof. Vedrucha Pandya - Library Administrator</p>
-</div>
+    <div class="admin-header">
+        <h1>👨‍💼 Admin Control Panel</h1>
+        <p>Prof. Vedrucha Pandya - Library Administrator</p>
+    </div>
 
-<!-- DASHBOARD -->
-<section id="dashboard">
-<h2 class="section-title">Dashboard Statistics</h2>
-<div id="dash-stats" class="dashboard-grid"></div>
-</section>
+    <!-- DASHBOARD -->
+    <section id="dashboard">
+        <h2 class="section-title">Dashboard Statistics</h2>
+        <div id="dash-stats" class="dashboard-grid"></div>
+    </section>
 
-<!-- BOOKS -->
-<section id="books">
-<h2 class="section-title">Books Management</h2>
+    <!-- BOOKS -->
+    <section id="books">
+        <h2 class="section-title">Books Management</h2>
 
-<div class="card">
-<h3>Add New Book</h3>
+        <div class="card">
+            <h3>Add New Book</h3>
 
-<form id="add-book-form">
+            <form id="add-book-form">
+                <input type="text" id="book-name" placeholder="Book Name" required>
 
-<input type="text" id="book-name" placeholder="Book Name" required>
+                <select id="book-category" title="Choose a book category" required>
+                    <option value="">Select Category</option>
+                    <option value="Language">Language</option>
+                    <option value="Science">Science</option>
+                    <option value="Technology">Technology</option>
+                </select>
 
-<select id="book-category" required>
-<option value="">Select Category</option>
-<option>Language</option>
-<option>Science</option>
-<option>Technology</option>
-</select>
+                <input type="number" id="book-price" placeholder="Price ₹" required>
 
-<input type="number" id="book-price" placeholder="Price ₹" required>
+                <button class="btn" type="submit">Add Book</button>
+            </form>
+        </div>
 
-<button class="btn" type="submit">Add Book</button>
+        <div class="card">
+            <h3>All Books</h3>
+            <div id="books-table"></div>
+        </div>
+    </section>
 
-</form>
-</div>
+    <!-- STUDENTS -->
+    <section id="students">
+        <h2 class="section-title">Students</h2>
+        <div class="card">
+            <div id="students-table"></div>
+        </div>
+    </section>
 
-<div class="card">
-<h3>All Books</h3>
-<div id="books-table"></div>
-</div>
-
-</section>
-
-<!-- STUDENTS -->
-<section id="students">
-<h2 class="section-title">Students</h2>
-<div class="card">
-<div id="students-table"></div>
-</div>
-</section>
-
-<!-- ORDERS -->
-<section id="orders">
-<h2 class="section-title">Orders</h2>
-<div class="card">
-<div id="orders-table"></div>
-</div>
-</section>
+    <!-- ORDERS -->
+    <section id="orders">
+        <h2 class="section-title">Orders</h2>
+        <div class="card">
+            <div id="orders-table"></div>
+        </div>
+    </section>
 
 </div>
 
-<footer>
-<p>© Silver Oak University LMS</p>
+<footer class="site-footer">
+    <div class="footer-inner">
+        <p>© 2026 Library Management System. All rights reserved.</p>
+        <p>Designed and maintained by Prof. Vedrucha Pandya | 
+            <a href="https://silveroaks.ac.in" target="_blank" rel="noopener noreferrer">silveroaks.ac.in</a>
+        </p>
+        <p>Contact: 
+            <a href="mailto:library@silveroaks.ac.in">library@silveroaks.ac.in</a> 
+            | +91 7984773148
+        </p>
+    </div>
 </footer>
 
 <script src="js/app.js"></script>
 
 <script>
-    window.addEventListener('load', function() {
-        checkAdminAuth();
-        displayAdminStats();
-        displayBooksAdmin();
-        displayStudentsAdmin();
-        displayOrdersAdmin();
+window.addEventListener('load', function () {
 
-        // Add event listener for add book form
-        const addBookForm = document.getElementById('add-book-form');
-        if (addBookForm) {
-            addBookForm.addEventListener('submit', addNewBook);
-        }
+    // ✅ Check function exists before calling
+    if (typeof checkAdminAuth === "function") checkAdminAuth();
+    if (typeof displayAdminStats === "function") displayAdminStats();
+    if (typeof displayBooksAdmin === "function") displayBooksAdmin();
+    if (typeof displayStudentsAdmin === "function") displayStudentsAdmin();
+    if (typeof displayOrdersAdmin === "function") displayOrdersAdmin();
 
-        // Add logout functionality
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', function() {
-                localStorage.removeItem('adminLogged');
-                window.location.href = 'admin-login.html';
-            });
-        }
-    });
+    // ✅ Add Book Form
+    const addBookForm = document.getElementById('add-book-form');
+    if (addBookForm) {
+        addBookForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // IMPORTANT FIX
+
+            if (typeof addNewBook === "function") {
+                addNewBook();
+            } else {
+                console.error("addNewBook() not defined in app.js");
+            }
+        });
+    }
+
+    // ✅ Logout Button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+            localStorage.removeItem('adminLogged');
+            window.location.href = 'admin-login.html';
+        });
+    }
+});
 </script>
 
 </body>
