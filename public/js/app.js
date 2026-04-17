@@ -119,19 +119,23 @@ function validateStudentLogin(e) {
 
     // Store student in the students list (for admin dashboard)
     let allStudents = JSON.parse(localStorage.getItem('allStudents') || '[]');
-    const existingStudent = allStudents.find(s => s.enrollment === enrollment);
-    if (!existingStudent) {
-        allStudents.push({
-            id: allStudents.length + 1,
-            name,
-            enrollment,
-            email,
-            mobile,
-            dateOfBirth,
-            loginDate: new Date().toISOString().split('T')[0]
-        });
-        localStorage.setItem('allStudents', JSON.stringify(allStudents));
+    const existingStudentIndex = allStudents.findIndex(s => s.enrollment === enrollment);
+    const studentData = {
+        id: existingStudentIndex >= 0 ? allStudents[existingStudentIndex].id : allStudents.length + 1,
+        name,
+        enrollment,
+        email,
+        mobile,
+        dateOfBirth,
+        loginDate: new Date().toISOString().split('T')[0]
+    };
+
+    if (existingStudentIndex >= 0) {
+        allStudents[existingStudentIndex] = studentData;
+    } else {
+        allStudents.push(studentData);
     }
+    localStorage.setItem('allStudents', JSON.stringify(allStudents));
 
     showAlert('Login successful! Welcome ' + name, 'success');
     setTimeout(() => {
@@ -204,7 +208,7 @@ function displayCart() {
     if (!cartContainer) return;
 
     if (cart.length === 0) {
-        cartContainer.innerHTML = '<p style="text-align: center; padding: 40px;">Your cart is empty</p>';
+        cartContainer.innerHTML = '<p class="empty-state">Your cart is empty</p>';
         document.getElementById('cart-summary').innerHTML = '';
         return;
     }
@@ -224,10 +228,10 @@ function displayCart() {
                 <div class="cart-item-actions">
                     <div class="quantity-control">
                         <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">−</button>
-                        <input type="text" value="${item.quantity}" readonly style="color: #333;">
+                        <input type="text" value="${item.quantity}" readonly>
                         <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
                     </div>
-                    <span style="font-weight: 700; color: #667eea;">₹${itemTotal}</span>
+                    <span class="cart-item-total">₹${itemTotal}</span>
                     <button class="btn-remove" onclick="removeFromCart(${item.id})">Remove</button>
                 </div>
             </div>
@@ -544,7 +548,7 @@ function displayStudentsAdmin() {
     const students = JSON.parse(localStorage.getItem('allStudents') || '[]');
 
     if (students.length === 0) {
-        container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">No students have logged in yet.</p>';
+        container.innerHTML = '<p class="empty-state">No students have logged in yet.</p>';
         return;
     }
 
@@ -591,27 +595,8 @@ function displayStudentsAdmin() {
 }
 
 function viewStudentOrders(enrollment) {
-    const orders = JSON.parse(localStorage.getItem('allOrders') || '[]');
-    const studentOrders = orders.filter(order => order.student.enrollment === enrollment);
-
-    if (studentOrders.length === 0) {
-        showAlert('No orders found for this student', 'info');
-        return;
-    }
-
-    // Create a modal or detailed view for student orders
-    let orderDetails = `Orders for ${studentOrders[0].student.name} (${enrollment}):\n\n`;
-
-    studentOrders.forEach(order => {
-        orderDetails += `Order ID: ${order.id}\n`;
-        orderDetails += `Date: ${new Date(order.orderDate).toLocaleDateString()}\n`;
-        orderDetails += `Books: ${order.books.map(book => `${book.name} (${book.quantity}x)`).join(', ')}\n`;
-        orderDetails += `Total: ₹${order.totalAmount.toFixed(2)}\n`;
-        orderDetails += `Payment: ${order.paymentMethod}\n`;
-        orderDetails += `Status: ${order.status}\n\n`;
-    });
-
-    alert(orderDetails);
+    localStorage.setItem('adminOrderFilterEnrollment', enrollment);
+    window.location.href = 'admin-orders.html';
 }
 
 function displayOrdersAdmin() {
@@ -621,7 +606,7 @@ function displayOrdersAdmin() {
     const orders = JSON.parse(localStorage.getItem('allOrders') || '[]');
 
     if (orders.length === 0) {
-        container.innerHTML = '<p style="text-align: center; padding: 40px; color: #666;">No orders have been placed yet.</p>';
+        container.innerHTML = '<p class="empty-state">No orders have been placed yet.</p>';
         return;
     }
 
@@ -645,18 +630,18 @@ function displayOrdersAdmin() {
     orders.forEach(order => {
         const bookDetails = order.books.map(book => `${book.name} (${book.quantity}x × ₹${book.price})`).join('<br>');
         const orderDate = new Date(order.orderDate).toLocaleDateString();
-        const statusClass = order.status === 'Completed' ? 'alert-success' : 'alert-info';
+        const statusClass = order.status === 'Completed' ? 'status-success' : 'status-info';
 
         html += `
             <tr>
                 <td>${order.id}</td>
                 <td>${order.student.name}</td>
                 <td>${order.student.enrollment}</td>
-                <td style="max-width: 300px; word-wrap: break-word;">${bookDetails}</td>
+                <td class="break-word">${bookDetails}</td>
                 <td>₹${order.totalAmount.toFixed(2)}</td>
                 <td>${order.paymentMethod}</td>
                 <td>${orderDate}</td>
-                <td><span class="${statusClass}" style="padding: 5px 10px; border-radius: 3px;">${order.status}</span></td>
+                <td><span class="${statusClass} status-pill">${order.status}</span></td>
             </tr>
         `;
     });
