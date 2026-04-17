@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Order History - Library Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">📚 Library Management - Admin</div>
+            <nav>
+                <ul>
+                    <li><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li><a href="admin-dashboard.html#students">Students</a></li>
+                    <li><a href="admin-dashboard.html#orders">Orders</a></li>
+                    <li><button class="btn-logout" id="logoutBtn">Logout</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="admin-header">
+            <h1>Order History</h1>
+            <p>Detailed student order history for admin review.</p>
+        </div>
+
+        <div class="card panel-box">
+            <button class="btn mb-20" onclick="window.location.href='admin-dashboard.html'">← Back to Dashboard</button>
+            <div id="orders-history"></div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            checkAdminAuth();
+            displayOrdersHistoryPage();
+
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    localStorage.removeItem('adminLogged');
+                    window.location.href = 'admin-login.html';
+                });
+            }
+        });
+
+        function displayOrdersHistoryPage() {
+            const container = document.getElementById('orders-history');
+            if (!container) return;
+
+            const filterEnrollment = localStorage.getItem('adminOrderFilterEnrollment');
+            const orders = JSON.parse(localStorage.getItem('allOrders') || '[]');
+            const filteredOrders = filterEnrollment ? orders.filter(order => order.student.enrollment === filterEnrollment) : orders;
+            const titleText = filterEnrollment ? `Showing orders for: ${filterEnrollment}` : 'Showing all orders';
+
+            container.innerHTML = `<h2 class="mb-20">${titleText}</h2>`;
+
+            if (filteredOrders.length === 0) {
+                container.innerHTML += '<p class="empty-state">No orders found.</p>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Student Name</th>
+                            <th>Enrollment</th>
+                            <th>Book Details</th>
+                            <th>Total Amount</th>
+                            <th>Payment</th>
+                            <th>Order Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            filteredOrders.forEach(order => {
+                const bookDetails = order.books.map(book => `${book.name} (${book.quantity}× ₹${book.price})`).join('<br>');
+                const orderDate = new Date(order.orderDate).toLocaleDateString();
+                html += `
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.student.name}</td>
+                        <td>${order.student.enrollment}</td>
+                        <td class="break-word">${bookDetails}</td>
+                        <td>₹${order.totalAmount.toFixed(2)}</td>
+                        <td>${order.paymentMethod}</td>
+                        <td>${orderDate}</td>
+                        <td>${order.status}</td>
+                    </tr>
+                `;
+            });
+
+            html += `</tbody></table>`;
+            container.innerHTML += html;
+
+            if (filterEnrollment) {
+                localStorage.removeItem('adminOrderFilterEnrollment');
+            }
+        }
+    </script>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>© 2026 Library Management System. All rights reserved.</p>
+            <p>Designed and maintained by Prof. Vedrucha Pandya | <a href="https://silveroaks.ac.in" target="_blank" rel="noopener noreferrer">silveroaks.ac.in</a></p>
+            <p>Contact: <a href="mailto:library@silveroaks.ac.in">library@silveroaks.ac.in</a> | +91 7984773148</p>
+        </div>
+    </footer>
+</body>
+</html>
